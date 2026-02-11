@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine Game Oana 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+      color: white;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.2);
+      padding: 45px;
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+      max-width: 650px;
+      animation: pop 0.7s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      margin: 12px;
+      padding: 12px 28px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .yes {
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+
+    .no {
+      background: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 25px;
+      opacity: 0.7;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- inimioare plutitoare -->
+  <div id="heartsContainer"></div>
+
+  <!-- LEVEL 1 -->
+  <div class="box" id="lvl1">
+    <h1>Level 1 ❤️</h1>
+    <p>Oana, vrei să fii Valentine-ul meu?</p>
+    <button class="yes" onclick="next(1)">DA 💖</button>
+    <button class="no" id="no1">NU 😅</button>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="box hidden" id="lvl2">
+    <h1>Level 2 😏</h1>
+    <p>Sigură că vrei să apeși NU?</p>
+    <button class="yes" onclick="next(2)">NU, DA 😍</button>
+    <button class="yes" onclick="alert('Ai încercat să mă păcălești 😈')">NU 😜</button>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="box hidden" id="lvl3">
+    <h1>Level 3 🤨</h1>
+    <p>Cine e cea mai frumoasă fată din lume?</p>
+    <button class="yes" onclick="next(3)">Oana 💁‍♀️</button>
+    <button class="yes" onclick="next(3)">Tot Oana 😌</button>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="box hidden" id="lvl4">
+    <h1>Level 4 😂</h1>
+    <p>Alege răspunsul corect:</p>
+    <p>Eu o iubesc pe Oana...</p>
+    <button class="yes" onclick="next(4)">Mult ❤️</button>
+    <button class="yes" onclick="next(4)">Prea mult 😳</button>
+    <button class="yes" onclick="next(4)">INFIIIIINIT 💘</button>
+  </div>
+
+  <!-- LEVEL 5 -->
+  <div class="box hidden" id="lvl5">
+    <h1>Level 5 FINAL BOSS 😈</h1>
+    <p>Dacă mă iubești... apasă DA 💍</p>
+    <button class="yes" onclick="final()">DAAAAA 😍</button>
+    <button class="no" id="no5">NU 🙃</button>
+  </div>
+
+  <!-- FINAL -->
+  <div class="box hidden" id="finalBox">
+    <h1>💖 AI CÂȘTIGAT 💖</h1>
+    <p>
+      Felicitări Oana! 🎉<br>
+      Ai trecut toate nivelele iubirii mele 😈❤️
+    </p>
+    <p>
+      Indiferent ce ai apăsat,<br>
+      tu ești răspunsul corect mereu.
+    </p>
+    <h2>Te iubesc enorm 🌹</h2>
+    <p>Valentine-ul meu azi, mâine și pentru totdeauna 💘</p>
+  </div>
+
+  <script>
+    // FUNCTIE NEXT LEVEL
+    function next(level) {
+      document.getElementById("lvl" + level).classList.add("hidden");
+      document.getElementById("lvl" + (level + 1)).classList.remove("hidden");
+    }
+
+    // FINAL
+    function final() {
+      document.getElementById("lvl5").classList.add("hidden");
+      document.getElementById("finalBox").classList.remove("hidden");
+    }
+
+    // BUTOANE CARE FUG
+    function runaway(btnId) {
+      const btn = document.getElementById(btnId);
+      btn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - 120);
+        const y = Math.random() * (window.innerHeight - 60);
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+      });
+    }
+
+    runaway("no1");
+    runaway("no5");
+
+    // INIMIOARE PLUTITOARE
+    const heartsContainer = document.getElementById("heartsContainer");
+    const heartEmojis = ["❤️","💖","💕","💘","💝"];
+
+    for(let i=0; i<30; i++){
+      const span = document.createElement("span");
+      span.innerText = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+      span.classList.add("heart");
+      span.style.left = Math.random()*100 + "vw";
+      span.style.fontSize = (10 + Math.random()*20) + "px";
+      span.style.animationDuration = (5 + Math.random()*5) + "s";
+      heartsContainer.appendChild(span);
+    }
+  </script>
+
+</body>
+</html>
